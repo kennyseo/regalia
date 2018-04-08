@@ -1,57 +1,48 @@
-<!DOCTYPE html><html lang="en"><head>
-   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 
-   <meta charset="UTF-8">   <title>Home | Bookstore | University of Arkansas</title>
+<title>University of Arkansas Bookstore and Razorback Shop</title>
+<meta name="description" content="The University of Arkansas Bookstore is constantly working to provide students with the best possible pricing on textbooks, school supplies, computers and academic materials. Don’t forget to get your Razorbacks Accessories, including hats and caps, diploma frames and graduation salute." />
+<meta name="keywords" content="University of Arkansas, Bookstore, Textbooks, Razorbacks, Hogs, Fayetteville, Northwest Arkansas, NWA, General Books, Study Aids, Computers, mp3 players, iPads, Supplies, U of A, Garland Center" />
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://shop.uofastore.com//fonts.googleapis.com/css?family=Lato:400,400i,700,700i|Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+
+<!--Xmlpackage 'script.head' -->
+<script>
+						(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+						(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+						m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+						})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+						ga('create', 'UA-68001224-3', 'shop.uofastore.com');
+
+						ga('send', 'pageview');
+					</script>
+<!--End of xmlpackage 'script.head' -->
 
 
 
-   <meta name="Description" content="">
-
-   <meta name="Keywords" content="bookstore">
-
-   <meta name="Author" content="">
-
-
-
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><!-- <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet" /> -->
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
-
-<link href='//fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css' />
-
-<link href="https://www.uark.edu/_resources/php/combine.php?t=css&amp;f=bootstrap-3.min.css,uark-style.css" rel="stylesheet">
-<link href="https://www.uark.edu/_resources/js/nivo/nivo-slider.css" rel="stylesheet"> <!-- Nivo Slider -->
-<script src="//www.uark.edu/_resources/js/jquery.js" type="text/javascript"></script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js"></script>
-<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js"></script>
-<![endif]-->
-
-<script src="//www.uark.edu/_resources/includes/universal-www-google-analytics.inc" type="text/javascript"></script>
-<script src="https://bookstore-dev2.uark.edu/_resources/includes/secondary-google-analytics.inc" type="text/javascript"></script>
-<link href="https://bookstore-dev2.uark.edu/_resources/css/style_sw.css" rel="stylesheet" />
-<script src="https://bookstore-dev2.uark.edu/_resources/js/snap.svg-min.js"></script>
+<script src="https://shop.uofastore.com/scripts/_skin_bundle_b54953e000cbf9949fb6c3a055b62bd9?v=rmK0qSj3J5HLW5T2nHBRg819_71C8hStCGnvCmqfOp81"></script>
 
 
 
 
-<!-- ks -->
-<link href="https://bookstore-dev2.uark.edu/_resources/css/style_ks.css" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400,600,800" rel="stylesheet">
-
-<script src="https://bookstore-dev2.uark.edu/_resources/js/textbook-adopt.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://bookstore-dev2.uark.edu/_resources/js/table-sort.js"></script>
-
-<script src="https://bookstore-dev2.uark.edu/_resources/js/masonry.js"></script>
-<script src="https://bookstore-dev2.uark.edu/_resources/js/masonry2.js"></script>
+<link href="https://shop.uofastore.com/skins/skin_1/css/_skin_bundle?v=TazmYgBKT4f_tAuJpFpycJQZ57pVQXBaVZGh_aeSE9U1" rel="stylesheet"/>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="https://bookstore-dev2.uark.edu/_resources/js/textbook-adopt.js"></script>
-<script src="https://bookstore-dev2.uark.edu/_resources/js/css_browser_selector.js" type="text/javascript"></script>
-<style>
-   #oudirectedit{ position: absolute; top: 0px; left: 0px; text-decoration: none; }
-  </style></head>
+
+
+
+
+<link href="https://shop.uofastore.com/skins/skin_1/css/bundledhome?v=K9zpE7pfT1p7mfLLH4jp8Yeh_WxsLAYrUQ5tJ0T41wg1" rel="stylesheet"/>
+
+
+</head>
+
+<body>
