@@ -70,7 +70,7 @@
 	</div>
 </div>
 
-<script src="/regalia.js"></script>
+<script src="js/regalia.js"></script>
 
 
 </body>
