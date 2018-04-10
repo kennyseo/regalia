@@ -7,7 +7,7 @@
 
 	include("includes/header.php");
 	include("includes/nav.php");
-	include("includes/connection.php");
+	require_once("includes/connection.php");
 
 ?>
 
