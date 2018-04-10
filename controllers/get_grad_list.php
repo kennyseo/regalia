@@ -9,249 +9,64 @@
 
 	include("../includes/connection.php");
 
-
-	//Clear Tables
-	mysql_query("TRUNCATE TABLE get_grad");
-	mysql_query("TRUNCATE TABLE get_grad_temp");
-
-
-	//Load Students
-	mysql_query("LOAD DATA LOCAL INFILE 'http://localhost:8888/regalia/includes/Graduates.txt'
-			INTO TABLE get_grad FIELDS TERMINATED BY '| ' IGNORE 3 LINES (blank,student_id,lastname,firstname,level,acad_career,degree,honors,acad_prog,term,year,comm_term,attend_comm,graduates_nophone,email,perm_address1,perm_address2,perm_address3,perm_city,perm_state,perm_zip,mail_address1,mail_address2,mail_address3,mail_city,mail_state,mail_zip,dip_address1,dip_address2,dip_address3,dip_city,dip_state,dip_zip,perm_phone,cell_phone,deceased_date)");
-
-	//mysql_query("DELETE FROM get_grad WHERE student_id LIKE '-%'");
-	//mysql_query("DELETE FROM get_grad WHERE student_id LIKE ' %'");
-	//mysql_query("DELETE FROM get_grad WHERE student_id LIKE ''");
-
-	mysql_query("UPDATE get_grad SET mail_address1='', mail_address2='', mail_address3='', mail_state ='', mail_zip=''
-	              WHERE mail_state = '' OR mail_state = ' '");
-
-	mysql_query("UPDATE get_grad SET perm_address1 = '', perm_address2 = '', perm_address3 = '', perm_city = '', perm_state = '', perm_zip = ''
-	              WHERE perm_state = '' OR perm_state = ' '");
-
-	/*
-	//Update Table
-	mysql_query('UPDATE graduates AS grads
-	  LEFT JOIN ( SELECT graduates_regalia.degree, graduates_regalia.regalia_sku
-	  FROM graduates_regalia
-	  ) AS regalia ON regalia.degree = grads.degree
-	  SET grads.regalia_sku = regalia.regalia_sku
-	  WHERE grads.degree = regalia.degree
-	');
-	*/
-
-
-	if(Date("m")< 8 ){
-			$season="Spring";
-	} else {$season="Fall";}
-
-	$today = date("Y-n-j");
-
-
-	//INSERT get_grad_temp INTO graduates
-
-	$sqlquery = "SELECT * FROM get_grad";
-
-	$result=mysql_query($sqlquery);
-
-	if ($result==""){}
-	else {
-	        $num=mysql_num_rows($result);
-	}
-
-	$i=0;
-
-	while ($i < $num) {
-
-	$student_id=mysql_result($result,$i,'student_id');
-	$firstname=mysql_result($result,$i,'firstname');
-	$lastname=mysql_result($result,$i,'lastname');
-	$level=mysql_result($result,$i,'level');
-	$acad_career=mysql_result($result,$i,'acad_career');
-	$degree=mysql_result($result,$i,'degree');
-	$honors=mysql_result($result,$i,'honors');
-	$acad_prog=mysql_result($result,$i,'acad_prog');
-	$term=mysql_result($result,$i,'term');
-	$year=mysql_result($result,$i,'year');
-	$comm_term=mysql_result($result,$i,'comm_term');
-	$attend_comm=mysql_result($result,$i,'attend_comm');
-	$email=mysql_result($result,$i,'email');
-	$cell_phone=mysql_result($result,$i,'cell_phone');
-	$perm_address1=mysql_result($result,$i,'perm_address1');
-	$perm_address2=mysql_result($result,$i,'perm_address2');
-	$perm_address3=mysql_result($result,$i,'perm_address3');
-	$perm_city=mysql_result($result,$i,'perm_city');
-	$perm_state=mysql_result($result,$i,'perm_state');
-	$perm_zip=mysql_result($result,$i,'perm_zip');
-	$mail_address1=mysql_result($result,$i,'mail_address1');
-	$mail_address2=mysql_result($result,$i,'mail_address2');
-	$mail_address3=mysql_result($result,$i,'mail_address3');
-	$mail_city=mysql_result($result,$i,'mail_city');
-	$mail_state=mysql_result($result,$i,'mail_state');
-	$mail_zip=mysql_result($result,$i,'mail_zip');
-	$deceased_date=mysql_result($result,$i,'deceased_date');
-
-	$student_id=str_replace(" ", "",$student_id);
-	$firstname=str_replace(",", "",$firstname);
-	$firstname=str_replace("  ", "",$firstname);
-	$lastname=str_replace(",", "",$lastname);
-	$lastname=str_replace("  ", "",$lastname);
-	$email=str_replace(" ", "",$email);
-	$cell_phone=str_replace(" ", "",$cell_phone);
-	$year=str_replace(" ", "",$year);
-	$comm_term=str_replace(" ", "",$comm_term);
-	$attend_comm=str_replace(" ", "",$attend_comm);
-	$level=str_replace(" ", "",$level);
-	$acad_career=str_replace(" ", "",$acad_career);
-	$degree=str_replace(" ", "",$degree);
-	$honors=str_replace(" ", "",$honors);
-	$acad_prog=str_replace(" ", "",$acad_prog);
-	$term=str_replace(" ", "",$term);
-	$perm_address1=str_replace(",", "",$perm_address1);
-	$perm_address1=str_replace("  ", "",$perm_address1);
-	$perm_address2=str_replace(",", "",$perm_address2);
-	$perm_address3=str_replace(",", "",$perm_address3);
-	$perm_city=str_replace(",", "",$perm_city);
-	$perm_city=str_replace("  ", "",$perm_city);
-	$perm_state=str_replace(",", "",$perm_state);
-	$perm_state=str_replace(" ", "",$perm_state);
-	$perm_zip=str_replace(",", "",$perm_zip);
-	$perm_zip=str_replace(" ", "",$perm_zip);
-
-	$grad_id=$student_id.".".$degree.".".$acad_prog.".".$year.".".$season;
-	//$deceased_date = date("Y-n-j",$deceased_date);
-
-	//Update Levels
-	if($level=="Bachelor"){$level="Bachelors";}
-	if($level=="Master"){$level="Masters";}
-	if($level=="Doctorate"){$level="Doctorates";}
-
-	//Update Addresses
-	$address=$perm_address1." ".$perm_address2." ".$perm_address3;
-	$address=str_replace("  ", "",$address);
-	$city=$perm_city;
-	$state=$perm_state;
-	$zip=$perm_zip;
-
-	if($address==""){$address="";$city="";$state="";$zip="";}
-	if($address==" "){$address="";$city="";$state="";$zip="";}
-	if($address=="  "){$address="";$city="";$state="";$zip="";}
-	if($perm_city==""){$address="";$city="";$state="";$zip="";}
-	if($perm_city==" "){$address="";$city="";$state="";$zip="";}
-	if($perm_state==""){$address="";$city="";$state="";$zip="";}
-	if($perm_state==" "){$address="";$city="";$state="";$zip="";}
-
-	$capsize = "1-size";
-	$cap_sku = "1853578";
-
-	//INSERT get_grad INTO get_grad_temp
-	mysql_query("INSERT INTO get_grad_temp (grad_id, student_id, firstname, lastname, email, cell_phone, year, term, comm_term, attend_comm, season, level, degree, honors, acad_career, acad_prog, address, city, state, zip, capsize, cap_sku, tassel_sku, hood_sku, degree_color, deceased_date)
-	              VALUES ('$grad_id','$student_id','$firstname','$lastname','$email','$cell_phone','$year','$term','$comm_term','$attend_comm','$season','$level','$degree','$honors','$acad_career','$acad_prog','$address','$city','$state','$zip','$capsize','$cap_sku','$tassel_sku','$hood_sku','$degree_color','$deceased_date')
-	");
-
-
-	//UPDATE existing graduatesaddresses
-	mysql_query("UPDATE graduates SET address='$address', city='$city', state='$state', zip='$zip'
-	                WHERE grad_id='$grad_id' AND address = ''");
-
-	$i++;
-	}
-
-	mysql_query("UPDATE get_grad_temp SET address = '', city = '', state = '', zip = ''
-	              WHERE city = ''");
-
-	mysql_query("UPDATE get_grad_temp JOIN graduates_degrees ON get_grad_temp.degree = graduates_degrees.degree
-	            SET get_grad_temp.degree_color = graduates_degrees.color");
-
-	mysql_query("UPDATE get_grad_temp JOIN graduates_regalia ON get_grad_temp.degree_color = graduates_regalia.color
-	            SET get_grad_temp.tassel_sku = graduates_regalia.sku
-	            WHERE get_grad_temp.tassel_sku='' AND graduates_regalia.type='tassel'");
-
-	mysql_query("UPDATE get_grad_temp JOIN graduates_regalia ON get_grad_temp.degree_color = graduates_regalia.color
-	            SET get_grad_temp.hood_sku = graduates_regalia.sku
-	            WHERE get_grad_temp.hood_sku='' AND graduates_regalia.type='hood'");
-
-	mysql_query("UPDATE get_grad_temp SET get_grad_temp.hood_sku = ''
-	            WHERE get_grad_temp.level='Bachelors'");
-
-
-	//INSERT get_grad_temp INTO graduates
-	mysql_query("INSERT INTO graduates ( grad_id, student_id, firstname, lastname, email, cell_phone, year, term, season, comm_term, attend_comm, level, degree, honors, acad_prog, acad_career,
-	             address, city, state, zip, capsize, cap_sku, tassel_sku, hood_sku, degree_color, registration_date, deceased_date )
-	              SELECT DISTINCT get_grad_temp.grad_id, get_grad_temp.student_id, get_grad_temp.firstname, get_grad_temp.lastname,
-	              get_grad_temp.email, get_grad_temp.cell_phone, get_grad_temp.year, get_grad_temp.term, get_grad_temp.season, get_grad_temp.comm_term, get_grad_temp.attend_comm, get_grad_temp.level, get_grad_temp.degree, get_grad_temp.honors, get_grad_temp.acad_prog,
-	              get_grad_temp.acad_career, get_grad_temp.address, get_grad_temp.city, get_grad_temp.state, get_grad_temp.zip, get_grad_temp.capsize,
-	              get_grad_temp.cap_sku, get_grad_temp.tassel_sku, get_grad_temp.hood_sku, get_grad_temp.degree_color, get_grad_temp.registration_date, get_grad_temp.deceased_date
-	              FROM get_grad_temp
-	              LEFT JOIN graduates ON get_grad_temp.grad_id = graduates.grad_id
-	              WHERE graduates.grad_id IS NULL");
-
-	mysql_query("UPDATE graduates JOIN get_grad_temp ON graduates.grad_id = get_grad_temp.grad_id
-	            SET graduates.registration_date = '$today'
-	            WHERE graduates.registration_date='' OR graduates.registration_date='0000-00-00'");
-
-	mysql_query("UPDATE graduates JOIN graduates_regalia ON graduates.degree_color = graduates_regalia.color
-	            SET graduates.hood_sku = graduates_regalia.sku
-	            WHERE graduates.hood_sku='' AND graduates_regalia.type='hood'");
-
-
-	// UPDATE MISSING REGALIA INFO
-	mysql_query("UPDATE graduates INNER JOIN graduates_regalia ON (graduates.level = graduates_regalia.level)
-	            AND (graduates.height = graduates_regalia.size)
-	            SET graduates.gown_sku = graduates_regalia.sku
-	            WHERE graduates.gown_sku='' AND graduates_regalia.type='gown'");
-
-	mysql_query("UPDATE graduates INNER JOIN graduates_regalia ON graduates.capsize = graduates_regalia.size
-	            SET graduates.cap_sku = graduates_regalia.sku
-	            WHERE graduates.cap_sku='' AND graduates_regalia.type='cap'");
-
-	mysql_query("UPDATE graduates INNER JOIN graduates_regalia ON graduates.degree_color = graduates_regalia.degree_color
-	            SET graduates.hood_sku = graduates_regalia.sku
-	            WHERE graduates.hood_sku=''
-	            AND graduates_regalia.type='hood'
-	            AND graduates_regalia.level='Masters'");
-
-	mysql_query("UPDATE graduates INNER JOIN graduates_regalia ON graduates.degree_color = graduates_regalia.degree_color
-	            SET graduates.hood_sku = graduates_regalia.sku
-	            WHERE graduates.hood_sku=''
-	            AND graduates_regalia.type='hood'
-	            AND graduates_regalia.level='Doctorates'");
-
-	mysql_query("UPDATE graduates SET gown = '1', cap = '1', tassel = '1', hood = ''
-	              WHERE gown ='' AND height <>'' AND level='Bachelors'");
-
-	mysql_query("UPDATE graduates SET gown = '1', cap = '1', tassel = '1', hood = '1'
-	              WHERE gown ='' AND height <>'' AND level<>'Bachelors'");
-
-
-	mysql_query("UPDATE graduates INNER JOIN graduates_degrees ON graduates.degree = graduates_degrees.degree
-	            SET graduates.cap = '1', graduates.tassel = '1', graduates.degree_color = graduates_degrees.color, graduates.hood = '', graduates.degree_color = graduates_degrees.color
-	            WHERE graduates.tassel='' AND graduates.gown='1' AND graduates.level='Bachelors'");
-
-	mysql_query("UPDATE graduates INNER JOIN graduates_degrees ON graduates.degree = graduates_degrees.degree
-	            SET graduates.cap = '1', graduates.tassel = '1', graduates.degree_color = graduates_degrees.color, graduates.hood = '1', graduates.degree_color = graduates_degrees.color
-	            WHERE graduates.tassel='' AND graduates.gown='1' AND graduates.level<>'Bachelors'");
-
-	mysql_query("UPDATE graduates
-	            SET graduates.hood = '', graduates.degree_color = 'Black'
-	            WHERE graduates.level='Bachelors'");
-
-	mysql_query("UPDATE graduates SET graduates.level = 'Bachelors'
-	            WHERE graduates.level='Bachelor'");
-
-	mysql_query("UPDATE graduates SET graduates.level = 'Masters'
-	            WHERE graduates.level='Master'");
-
-	mysql_query("UPDATE graduates SET graduates.level = 'Doctorates'
-	            WHERE graduates.level='Doctorate'");
-
-	mysql_query("UPDATE graduates SET graduates.degree = 'M.AT'
-	            WHERE graduates.degree='M.AT.'");
-
-	mysql_close();
-
-	echo "<font color=red><b>Student graduates have been Uploaded and Updated</b></font><p>&nbsp;";
-
+$sql = "
+INSERT INTO `graduates` (`grad_id`, `student_id`, `firstname`, `lastname`, `email`, `cell_phone`, `year`, `term`, `comm_term`, `attend_comm`, `season`, `level`, `degree`, `honors`, `acad_prog`, `acad_career`, `address`, `city`, `state`, `zip`, `order_date`, `gown`, `height`, `gown_sku`, `cap`, `capsize`, `cap_sku`, `degree_color`, `tassel`, `tassel_sku`, `hood`, `hood_sku`, `home_ship`, `billing_dept`, `billing_po`, `registration_date`, `deceased_date`) VALUES
+('101797555.MS.GRAD.2018.Spring', '101797555', 'Mohamed', 'Abba ', 'maabba@websitedevteam.com', '583/530-5857', '2018', '1185', '', 'N', 'Spring', 'Masters', 'MS', '', 'GRAD', 'GRAD', '707 W Treadwell St ', 'Los Angeles ', 'CA', '72701-5755', NULL, '', NULL, '', '', '1-size', '1853578', 'Gold', '', '1852535', '', '1852500', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('005912359.BSN.EDUC.2018.Spring', '005912359', 'Jennifer ', 'Abbott ', 'jemcclen@websitedevteam.com', '501/570-5559', '2018', '1183', '', 'N', 'Spring', 'Bachelors', 'BSN', '', 'EDUC', 'UGRD', '190 Calico Trl ', 'Royal', 'CA', '71958-9755', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101309858.PHD.GEDU.2018.Spring', '101309858', 'Mohammed ', 'Abdalhadi', 'mabdalha@websitedevteam.com', '583/509-8595', '2018', '1183', '', 'N', 'Spring', 'Doctorates', 'PHD', '', 'GEDU', 'GRAD', '', '', '', '', NULL, '', NULL, '', '', '1-size', '1853578', 'Royal Blue', '', '1852505', '', '1852508', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101598588.BSME.ENGR.2018.Spring', '101598588', 'Adedoyin ', 'Abe', 'aaabe@websitedevteam.com', '583/313-2985', '2018', '1185', '1183', 'Y', 'Spring', 'Bachelors', 'BSME', '', 'ENGR', 'UGRD', '', '', '', '', '201803291751', '1', '5`7 - 5`9', '1851155', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101585138.BSBA.WCOB.2018.Spring', '101585138', 'Reid ', 'Abernathy', 'reaberna@websitedevteam.com', '583/530-7595', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSBA', '', 'WCOB', 'UGRD', '590 McLeod Dr', 'Farmington ', 'CA', '72730-2951', '201803301519', '1', '5`10 - 5`0', '1851153', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101513528.BSCMPE.ENGR.2018.Spring', '101513528', 'April', 'Abiera ', 'acabiera@websitedevteam.com', '583/800-5839', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSCMPE', '', 'ENGR', 'UGRD', '205 Lion Dr N', 'Gravette ', 'CA', '72735-8517', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101553525.MS.GAFL.2018.Spring', '101553525', 'Seth Bernard ', 'Abugho ', 'seabugho@websitedevteam.com', '927/555-5319', '2018', '1183', '1153', 'Y', 'Spring', 'Masters', 'MS', '', 'GAFL', 'GRAD', '', '', '', '', NULL, '', NULL, '', '', '1-size', '1853578', 'Gold', '', '1852535', '', '1852500', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101559875.MA.GARS.2018.Spring', '101559875', 'Farah', 'Abu-Safe ', 'fhabusaf@websitedevteam.com', '583/595-1598', '2018', '1183', '1183', 'Y', 'Spring', 'Masters', 'MA', '', 'GARS', 'GRAD', '2525 W Newport Dr', 'Los Angeles ', 'CA', '72703-1257', '201803301527', '1', '5`7 - 5`9', '1851575', '1', '1-size', '1853578', 'White', '1', '1852599', '1', '1852555', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101750157.BSIE.ENGR.2018.Spring', '101750157', 'Nour ', 'Abu-Safe ', 'nhabusaf@websitedevteam.com', '583/502-5111', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSIE', '', 'ENGR', 'UGRD', '1303 N EnglandApt 11 ', 'Los Angeles ', 'CA', '72703-1197', '201803291759', '1', '5`5 - 5`5', '1851127', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101588539.BA.ARSC.2018.Spring', '101588539', 'Alexis ', 'Acello ', 'aacello@websitedevteam.com', '', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BA', '', 'ARSC', 'UGRD', '3029 W Wildflower', 'Los Angeles ', 'CA', '72705-5722', '201803301550', '1', '5`7 - 5`9', '1851155', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101588550.BSBA.WCOB.2018.Spring', '101588550', 'Ana', 'Aceves ', 'akaceves@websitedevteam.com', '817/355-9555', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSBA', '', 'WCOB', 'UGRD', '1505 Westborough ', 'Northlake', 'TX', '75225-1811', '201803271735', '1', '5`1 - 5`3', '1851118', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101787275.BSME.ENGR.2018.Spring', '101787275', 'Rhett', 'Acker', 'ra015@websitedevteam.com', '918/775-7211', '2018', '1179', '', 'N', 'Spring', 'Bachelors', 'BSME', '', 'ENGR', 'UGRD', '505 S Byrd St', 'Coalgate ', 'OK', '75538-2209', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101759593.BSME.ENGR.2018.Spring', '101759593', 'Sterling ', 'Acree', 'skacree@websitedevteam.com', '935/827-7822', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSME', '', 'ENGR', 'UGRD', '33510 Windcrest', 'Magnolia ', 'TX', '77355-5852', '201803291537', '1', '5`10 - 5`0', '1851153', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101587385.BSBA.WCOB.2018.Spring', '101587385', 'Andrew ', 'Adamiak', 'ahadamia@websitedevteam.com', '507/221-8531', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSBA', '', 'WCOB', 'UGRD', '2502 Mallard Ct', 'Keller ', 'TX', '75258-8339', '201803291053', '1', '5`7 - 5`9', '1851155', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101753997.BS.EDUC.2018.Spring', '101753997', 'Katherine', 'Adams', 'kaa011@websitedevteam.com', '815/530-7525', '2018', '1179', '1179', 'Y', 'Spring', 'Bachelors', 'BS', '', 'EDUC', 'UGRD', '22305 River Rd ', 'Marengo', 'IL', '50152-9280', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101757801.MED.GEDU.2018.Spring', '101757801', 'Della', 'Adams', 'da101@websitedevteam.com', '918/839-7358', '2018', '1183', '1183', 'Y', 'Spring', 'Masters', 'MED', '', 'GEDU', 'GRAD', '2353 W Holly St', 'Los Angeles ', 'CA', '72703-1215', NULL, '', NULL, '', '', '1-size', '1853578', 'Light Blue', '', '1852525', '', '1852591', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101755339.MS.GEDU.2018.Spring', '101755339', 'Taylor ', 'Adams', 'tda005@websitedevteam.com', '', '2018', '1183', '1173', 'Y', 'Spring', 'Masters', 'MS', '', 'GEDU', 'GRAD', '155 Wyatt Cv ', 'Hot Springs', 'CA', '71913-1850', NULL, '', NULL, '', '', '1-size', '1853578', 'Gold', '', '1852535', '', '1852500', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101719112.MS.GAFL.2018.Spring', '101719112', 'Kerr ', 'Adams', 'kja005@websitedevteam.com', '789/103-8175', '2018', '1183', '1183', 'Y', 'Spring', 'Masters', 'MS', '', 'GAFL', 'GRAD', '', '', '', '', '201803301252', '1', '5`10 - 5`0', '1851583', '1', '1-size', '1853578', 'Gold', '1', '1852535', '1', '1852500', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101759255.MS.GEDU.2018.Spring', '101759255', 'Rebecca', 'Adams', 'ra013@websitedevteam.com', '815/810-5355', '2018', '1183', '1183', 'Y', 'Spring', 'Masters', 'MS', '', 'GEDU', 'GRAD', '1590 W Live Oak Dr ', 'Los Angeles ', 'CA', '72705-5852', '201805051530', '1', '5`7 - 5`9', '1851575', '1', '1-size', '1853578', 'Gold', '1', '1852535', '1', '1852500', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101595038.BSN.EDUC.2018.Spring', '101595038', 'Bethany', 'Adams', 'bra002@websitedevteam.com', '832/577-5175', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSN', '', 'EDUC', 'UGRD', '2505 Talina Way', 'Houston', 'TX', '77080-3808', '201803281553', '1', '5`1 - 5`3', '1851118', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101553189.BS.ENGR.2018.Spring', '101553189', 'Adrian ', 'Adams', 'ama021@websitedevteam.com', '583/509-5825', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BS', '', 'ENGR', 'UGRD', '505 E Edna St', 'Los Angeles ', 'CA', '72703-2719', '201803291551', '1', '5`10 - 5`0', '1851153', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101555555.BSHES.AFLS.2018.Spring', '101555555', 'Kenley ', 'Adams', 'kka001@websitedevteam.com', '252/855-7581', '2018', '1183', '1173', 'Y', 'Spring', 'Bachelors', 'BSHES', '', 'AFLS', 'UGRD', '285 NE Bayview Dr', 'Lees Summit', 'MO', '55055-3100', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101553057.BSBA.WCOB.2018.Spring', '101553057', 'Miles', 'Adams', 'ma021@websitedevteam.com', '583/879-5995', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSBA', '', 'WCOB', 'UGRD', '1530 N Charlee Ave ', 'Los Angeles ', 'CA', '72703-3055', '201803310100', '1', '5`1 - 5`3', '1851172', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101559517.BSBA.WCOB.2018.Spring', '101559517', 'Collin ', 'Adams', 'csa011@websitedevteam.com', '815/585-9355', '2018', '1179', '1179', 'Y', 'Spring', 'Bachelors', 'BSBA', '', 'WCOB', 'UGRD', '355 NW Rockhill Ln ', 'Lees Summit', 'MO', '55081-2098', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101527513.EDD.GEDU.2018.Spring', '101527513', 'Jason', 'Adams', 'ja020@websitedevteam.com', '935/552-3512', '2018', '1179', '1179', 'Y', 'Spring', 'Doctorates', 'EDD', '', 'GEDU', 'GRAD', '501 Sunset Pt', 'Kerens ', 'TX', '75155', NULL, '', NULL, '', '', '1-size', '1853578', 'Light Blue', '', '1852525', '', '1852591', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101532375.PHD.GENG.2018.Spring', '101532375', 'Fereydoun', 'Adbesh ', 'fadbesh@websitedevteam.com', '583/222-1155', '2018', '1179', '1173', 'Y', 'Spring', 'Doctorates', 'PHD', '', 'GENG', 'GRAD', '1177 S Springfield ', 'Los Angeles ', 'CA', '72705-7125', NULL, '', NULL, '', '', '1-size', '1853578', 'Royal Blue', '', '1852505', '', '1852508', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101591555.BS.EDUC.2018.Spring', '101591555', 'Cristin', 'Adcock ', 'cla011@websitedevteam.com', '870/822-9257', '2018', '1179', '1179', 'Y', 'Spring', 'Bachelors', 'BS', '', 'EDUC', 'UGRD', '1933 S County Road ', 'Osceola', 'CA', '72370-5033', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101558355.BSBA.WCOB.2018.Spring', '101558355', 'Cody ', 'Adcock ', 'caa008@websitedevteam.com', '501/553-5300', '2018', '1179', '1179', 'Y', 'Spring', 'Bachelors', 'BSBA', '', 'WCOB', 'UGRD', '123 Wellington ', 'Little Rock', 'CA', '72211-2150', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101558182.BID.ARCH.2018.Spring', '101558182', 'Khai ', 'Adderley ', 'kradderl@websitedevteam.com', '583/275-1502', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BID', '', 'ARCH', 'UGRD', '', '', '', '', '201803281058', '1', '5`1 - 5`3', '1851118', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101785570.MSOM.GENG.2018.Spring', '101785570', 'Temitayo ', 'Adesina', 'tiadesin@websitedevteam.com', '08050803135', '2018', '1183', '1183', 'Y', 'Spring', 'Masters', 'MSOM', '', 'GENG', 'GRAD', '2130 N Chestnut', 'Los Angeles ', 'CA', '72703-2271', '201803271517', '1', '5`7 - 5`9', '1851575', '1', '1-size', '1853578', 'Gold', '1', '1852535', '1', '1852500', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101725278.MIS.GBUS.2018.Spring', '101725278', 'Solomon', 'Adeyemi', 'sadeyemi@websitedevteam.com', '578/755-5931', '2018', '1183', '1183', 'Y', 'Spring', 'Masters', 'MIS', '', 'GBUS', 'GRAD', '1513 Persimmon St', 'Centerton', 'CA', '72719', NULL, '', NULL, '', '', '1-size', '1853578', 'Drab', '', '1852555', '', '1852519', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101511553.BS.EDUC.2018.Spring', '101511553', 'Briana ', 'Adkins ', 'bmadkins@websitedevteam.com', '583/555-0870', '2018', '1183', '', 'N', 'Spring', 'Bachelors', 'BS', '', 'EDUC', 'UGRD', '20519 Groth Rd ', 'Springdale ', 'CA', '72755-8858', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101555912.BSBA.WCOB.2018.Spring', '101555912', 'Zoey ', 'Adkins ', 'zeadkins@websitedevteam.com', '583/757-9577', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSBA', '', 'WCOB', 'UGRD', '515 Skyline Vista', 'Russellville ', 'CA', '72802-8885', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101555593.BM.ARSC.2018.Spring', '101555593', 'Dylan', 'Adkins ', 'dhadkins@websitedevteam.com', '918/875-2202', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BM', '', 'ARSC', 'UGRD', '5925 Cornell Dr', 'Bartlesville ', 'OK', '75005-8927', '201803291519', '1', '5`7 - 5`9', '1851155', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101551582.BSCHE.ENGR.2018.Spring', '101551582', 'Kayvan ', 'Afrasiabi', 'kjafrasi@websitedevteam.com', '583/525-7197', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSCHE', '', 'ENGR', 'UGRD', '15350 S Mountain ', 'Lowell ', 'CA', '72755-8550', '201803281509', '1', '5`5 - 5`5', '1851127', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101597985.BSBA.WCOB.2018.Spring', '101597985', 'Arian', 'Afsheen', 'arafshee@websitedevteam.com', '817/300-5513', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSBA', '', 'WCOB', 'UGRD', '205 Longview Ct', 'Keller ', 'TX', '75258-7315', '201803271555', '1', '5`10 - 5`0', '1851153', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101525537.PHD.GRAD.2018.Spring', '101525537', 'Mark Anthony Ayure ', 'Agana', 'aagana@websitedevteam.com', '583/305-9177', '2018', '1183', '1183', 'Y', 'Spring', 'Doctorates', 'PHD', '', 'GRAD', 'GRAD', '', '', '', '', '201805021220', '1', '5`5 - 5`5', '1851581', '1', '1-size', '1853578', 'Royal Blue', '1', '1852505', '1', '1852508', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101525537.GC.NDGR.2018.Spring', '101525537', 'Mark Anthony Ayure ', 'Agana', 'aagana@websitedevteam.com', '583/305-9177', '2018', '1179', '1183', 'Y', 'Spring', 'NoRegalia', 'GC', '', 'NDGR', 'GRAD', '', '', '', '', NULL, '', NULL, '', '', '1-size', '1853578', 'No Regalia', '', '', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101702923.BSBA.WCOB.2018.Spring', '101702923', 'Tessa', 'Agne ', 'tmagne@websitedevteam.com', '315/853-1805', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSBA', '', 'WCOB', 'UGRD', '57 Heatherbrook Ln ', 'Kirkwood ', 'MO', '53122-5155', '201803281112', '1', '5`5 - 5`5', '1851127', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101158308.MBA.GBUS.2018.Spring', '101158308', 'Ana', 'Aguayo ', 'aaguayo@websitedevteam.com', '583/855-3953', '2018', '1185', '1183', 'Y', 'Spring', 'Masters', 'MBA', '', 'GBUS', 'GRAD', '505 Dodson St. ', 'Springdale ', 'CA', '72755', NULL, '', NULL, '', '', '1-size', '1853578', 'Drab', '', '1852555', '', '1852519', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101521559.BARCH.ARCH.2018.Spring', '101521559', 'Joseph ', 'Aguilar', 'jma015@websitedevteam.com', '', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BARCH', '', 'ARCH', 'UGRD', '30 Emerald Ln', 'Greers Ferry ', 'CA', '72057-9238', '201803291515', '1', '5`7 - 5`9', '1851155', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101558971.BSBA.WCOB.2018.Spring', '101558971', 'Christian', 'Aguilar', 'caaguila@websitedevteam.com', '583/515-5818', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSBA', '', 'WCOB', 'UGRD', '2907 W Beechwood ', 'Rogers ', 'CA', '72755-0305', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101585055.BSIE.ENGR.2018.Spring', '101585055', 'Celia', 'Aguilar', 'caguilar@websitedevteam.com', '583/899-1218', '2018', '1183', '1173', 'Y', 'Spring', 'Bachelors', 'BSIE', '', 'ENGR', 'UGRD', '1505 S 25th Pl ', 'Rogers ', 'CA', '72758-5139', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101810120.BSBA.WCOB.2018.Spring', '101810120', 'Justin ', 'Aguilar', 'ja029@websitedevteam.com', '530/915-0355', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSBA', '', 'WCOB', 'UGRD', '30W120 Arbury Ct ', 'Warrenville', 'IL', '50555-1200', '201803281138', '1', '5`1 - 5`3', '1851172', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101585599.BSHES.AFLS.2018.Spring', '101585599', 'Payton ', 'Aguirre', 'paaguirr@websitedevteam.com', '972/822-9975', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSHES', '', 'AFLS', 'UGRD', '5597 Adrian Way', 'Plano', 'TX', '75025-2115', '201803271150', '1', '5`5 - 5`5', '1851127', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101535253.BS.ENGR.2018.Spring', '101535253', 'Orlando', 'Aguirre-Martinez ', 'oaguirre@websitedevteam.com', '583/233-9272', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BS', '', 'ENGR', 'UGRD', 'PO Box 251 ', 'Decatur', 'CA', '72722-0251', '201803291215', '1', '5`10 - 5`0', '1851153', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101559051.BSEE.ENGR.2018.Spring', '101559051', 'Arman', 'Ahmed', 'aa015@websitedevteam.com', '870/995-7005', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSEE', '', 'ENGR', 'UGRD', '505 Old Dominion ', 'West Helena', 'CA', '72390-2025', '201803271721', '1', '5`5 - 5`5', '1851127', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101799720.BA.ARSC.2018.Spring', '101799720', 'Rika ', 'Aikoh', 'raikoh@websitedevteam.com', '', '2018', '1179', '1179', 'Y', 'Spring', 'Bachelors', 'BA', '', 'ARSC', 'UGRD', '1105 W Maple St', 'Los Angeles ', 'CA', '72701', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101725958.BSEE.ENGR.2018.Spring', '101725958', 'Enoule ', 'Akibode', 'ekakibod@websitedevteam.com', '903/755-5825', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSEE', '', 'ENGR', 'UGRD', '3252 Country Brook ', 'Columbus ', 'IN', '57201-7155', '201803280938', '1', '5`7 - 5`9', '1851155', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101551570.PHD.GENG.2018.Spring', '101551570', 'Israel ', 'Akingeneye ', 'iakingen@websitedevteam.com', '583/555-5295', '2018', '1183', '1183', 'Y', 'Spring', 'Doctorates', 'PHD', '', 'GENG', 'GRAD', 'Sponsored Student 350 N Campus Dr', 'Los Angeles ', 'CA', '72701-3073', NULL, '1', '5`5 - 5`5*2', '1852550', '1', '1-size', '1853578', 'Royal Blue', '1', '1852505', '1', '1852508', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101555993.BSBA.WCOB.2018.Spring', '101555993', 'Jordan ', 'Akiyoshi ', 'jmakiyos@websitedevteam.com', '972/553-0315', '2018', '1179', '1173', 'Y', 'Spring', 'Bachelors', 'BSBA', '', 'WCOB', 'UGRD', '3555 Asbury Street ', 'Dallas ', 'TX', '75205', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101573188.PHD.GRAD.2018.Spring', '101573188', 'Musaab Habeeb Ali', 'Al Ameer ', 'malameer@websitedevteam.com', '583/553-9858', '2018', '1183', '1173', 'Y', 'Spring', 'Doctorates', 'PHD', '', 'GRAD', 'GRAD', 'Sponsored Student 355 N. Arkansas 1 University of', 'Los Angeles ', 'CA', '72701', NULL, '', NULL, '', '', '1-size', '1853578', 'Royal Blue', '', '1852505', '', '1852508', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101535057.BSME.ENGR.2018.Spring', '101535057', 'Abdurraheem', 'Al Mudhi ', 'afalmudh@websitedevteam.com', '813/851-8235', '2018', '1183', '1183', 'Y', 'Spring', 'Bachelors', 'BSME', '', 'ENGR', 'UGRD', '2313 W Skyler Dr ', 'Los Angeles ', 'CA', '72703-1272', '201803271529', '1', '5`1 - 5`3', '1851172', '1', '1-size', '1853578', 'Black', '1', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101805055.BSCHE.ENGR.2018.Spring', '101805055', 'Qassim ', 'Al Mutawa', 'qmalmuta@websitedevteam.com', '505/990-5732', '2018', '1179', '1173', 'Y', 'Spring', 'Bachelors', 'BSCHE', '', 'ENGR', 'UGRD', 'Sponsored Student 350 N. Campus Dr.1 University of', 'Los Angeles ', 'CA', '72701', NULL, '', NULL, '', '', '1-size', '1853578', 'Black', '', '1852517', '', '', NULL, NULL, NULL, '2018-03-19', '0000-00-00'),
+('101525705.MSCE.GENG.2018.Spring', '101525705', 'Ali Kareem ', 'Al Quraishi', 'akalqura@websitedevteam.com', '352/301-2890', '2018', '1179', '1179', 'Y', 'Spring', 'Masters', 'MSCE', '', 'GENG', 'GRAD', '378 Maguire Vlg APT# 3 ', 'Gainesville', 'FL', '32503-2001', NULL, '', NULL, '', '', '1-size', '1853578', 'Gold', '', '1852535', '', '1852500', NULL, NULL, NULL, '2018-03-19', '0000-00-00')
+";
 
 if ($link->query($sql) === TRUE) {
     echo "Table MyGuests created successfullyasdsadasd";
