@@ -11,8 +11,8 @@
 
   <script src="https://shop.uofastore.com/scripts/_skin_bundle_b54953e000cbf9949fb6c3a055b62bd9?v=rmK0qSj3J5HLW5T2nHBRg819_71C8hStCGnvCmqfOp81"></script>
 
-  <link href="http://localhost:8888/regalia/includes/css/style.css" rel="stylesheet"/>
-  <link href="http://localhost:8888/regalia/includes/css/custom.css" rel="stylesheet"/>
+  <link href="http://uofastore.com/regalia/includes/css/style.css" rel="stylesheet"/>
+  <link href="http://uofastore.com/regalia/includes/css/custom.css" rel="stylesheet"/>
 
 </head>
 <body>

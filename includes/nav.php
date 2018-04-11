@@ -47,25 +47,21 @@ z-index: 9999;
 
     <li class="dropdown"><a class="dropdown-toggle clown" href="#" data-toggle="dropdown">Students</a>
       <div class="dropdown-menu menu-students">
-        <h4>Students' Pickup List</h4>
+
         <div class="row">
-          <div class="col-md-4 col-sm-4 col-xs-12" style="border-left: 1px dotted #dedede;">
-            <h5><a href="" class="nav-cate"></a></h5>
-            <h5><a href="" class="nav-cate"></a></h5>
-            <h5><a href="" class="nav-cate"></a></h5>
-            <h5><a href="" class="nav-cate"></a></h5>
+          <div class="col-md-6 col-sm-6 col-xs-12" style="border-left: 1px dotted #dedede;">
+            <h4>Regalia Pickup Management</h4>
+            <h5><a href="" class="nav-cate">Pick up Regalia</a></h5>
+            <h5><a href="" class="nav-cate">Exchange Regalia</a></h5>
+            <h5><a href="" class="nav-cate">Update Grad/Regalia</a></h5>
+            <h5><a href="" class="nav-cate">Add Graduate</a></h5>
           </div>
-          <div class="col-md-4 col-sm-4 col-xs-12" style="border-left: 1px dotted #dedede;">
-            <h5><a href="" class="nav-cate"></a></h5>
-            <h5><a href="" class="nav-cate"></a></h5>
-            <h5><a href="" class="nav-cate"></a></h5>
-            <h5><a href="" class="nav-cate"></a></h5>
-          </div>
-          <div class="col-md-4 col-sm-4 col-xs-12" style="border-left: 1px dotted #dedede;">
-            <h5><a href="" class="nav-cate"></a></h5>
-            <h5><a href="" class="nav-cate"></a></h5>
-            <h5><a href="" class="nav-cate"></a></h5>
-            <h5><a href="" class="nav-cate"></a></h5>
+          <div class="col-md-6 col-sm-6 col-xs-12" style="border-left: 1px dotted #dedede;">
+            <h4>Regalia Pickup List</h4>
+            <h5><a href="" class="nav-cate">Find Graduates</a></h5>
+            <h5><a href="" class="nav-cate">Graduate List</a></h5>
+            <h5><a href="" class="nav-cate">Picked up List</a></h5>
+            <h5><a href="" class="nav-cate">Pick up List by Dates</a></h5>
           </div>
         </div>
       </div>
@@ -76,43 +72,20 @@ z-index: 9999;
 
     <li class="dropdown"><a class="dropdown-toggle clown" href="#" data-toggle="dropdown">Faculty</a>
     <div class="dropdown-menu menu-faculty">
-    <h4>University's OFFICIAL RAZORBACK SHOP</h4>
     <div class="row">
-      <div class="col-md-2 col-sm-2 col-xs-12" style="border-left: 1px dotted #dedede;">
-      <h5><a href="http://shop.uofastore.com/c-89-men.aspx" class="nav-cate">Men</a></h5>
-      <h5><a href="http://shop.uofastore.com/c-104-women.aspx" class="nav-cate">Women</a></h5>
-      <h5><a href="https://shop.uofastore.com/c-125-kids.aspx" class="nav-cate">Kids</a></h5>
-      <h5><a href="https://shop.uofastore.com/c-223-collections.aspx" class="nav-cate">Collections</a></h5>
+      <div class="col-md-6 col-sm-6 col-xs-12" style="border-left: 1px dotted #dedede;">
+        <h4>Regalia Pickup Management</h4>
+        <h5><a href="" class="nav-cate">Pick up Regalia</a></h5>
+        <h5><a href="" class="nav-cate">Exchange Regalia</a></h5>
+        <h5><a href="" class="nav-cate">Update Grad/Regalia</a></h5>
+        <h5><a href="" class="nav-cate">Add Graduate</a></h5>
       </div>
-      <div class="col-md-2 col-sm-2 col-xs-12" style="border-left: 1px dotted #dedede;">
-      <h5><a href="http://shop.uofastore.com/c-89-men.aspx" class="nav-cate">Men</a></h5>
-      <h5><a href="http://shop.uofastore.com/c-104-women.aspx" class="nav-cate">Women</a></h5>
-      <h5><a href="https://shop.uofastore.com/c-125-kids.aspx" class="nav-cate">Kids</a></h5>
-      <h5><a href="https://shop.uofastore.com/c-223-collections.aspx" class="nav-cate">Collections</a></h5>
-      </div>
-      <div class="col-md-2 col-sm-2 col-xs-12" style="border-left: 1px dotted #dedede;">
-      <h5><a href="http://shop.uofastore.com/c-89-men.aspx" class="nav-cate">Men</a></h5>
-      <h5><a href="http://shop.uofastore.com/c-104-women.aspx" class="nav-cate">Women</a></h5>
-      <h5><a href="https://shop.uofastore.com/c-125-kids.aspx" class="nav-cate">Kids</a></h5>
-      <h5><a href="https://shop.uofastore.com/c-223-collections.aspx" class="nav-cate">Collections</a></h5>
-      </div>
-      <div class="col-md-2 col-sm-2 col-xs-12" style="border-left: 1px dotted #dedede;">
-      <h5><a href="http://shop.uofastore.com/c-89-men.aspx" class="nav-cate">Men</a></h5>
-      <h5><a href="http://shop.uofastore.com/c-104-women.aspx" class="nav-cate">Women</a></h5>
-      <h5><a href="https://shop.uofastore.com/c-125-kids.aspx" class="nav-cate">Kids</a></h5>
-      <h5><a href="https://shop.uofastore.com/c-223-collections.aspx" class="nav-cate">Collections</a></h5>
-      </div>
-      <div class="col-md-2 col-sm-2 col-xs-12" style="border-left: 1px dotted #dedede;">
-      <h5><a href="http://shop.uofastore.com/c-89-men.aspx" class="nav-cate">Men</a></h5>
-      <h5><a href="http://shop.uofastore.com/c-104-women.aspx" class="nav-cate">Women</a></h5>
-      <h5><a href="https://shop.uofastore.com/c-125-kids.aspx" class="nav-cate">Kids</a></h5>
-      <h5><a href="https://shop.uofastore.com/c-223-collections.aspx" class="nav-cate">Collections</a></h5>
-      </div>
-      <div class="col-md-2 col-sm-2 col-xs-12" style="border-left: 1px dotted #dedede;">
-      <h5><a href="http://shop.uofastore.com/c-89-men.aspx" class="nav-cate">Men</a></h5>
-      <h5><a href="http://shop.uofastore.com/c-104-women.aspx" class="nav-cate">Women</a></h5>
-      <h5><a href="https://shop.uofastore.com/c-125-kids.aspx" class="nav-cate">Kids</a></h5>
-      <h5><a href="https://shop.uofastore.com/c-223-collections.aspx" class="nav-cate">Collections</a></h5>
+      <div class="col-md-6 col-sm-6 col-xs-12" style="border-left: 1px dotted #dedede;">
+        <h4>Regalia Pickup List</h4>
+        <h5><a href="" class="nav-cate">Find Graduates</a></h5>
+        <h5><a href="" class="nav-cate">Graduate List</a></h5>
+        <h5><a href="" class="nav-cate">Picked up List</a></h5>
+        <h5><a href="" class="nav-cate">Pick up List by Dates</a></h5>
       </div>
     </div>
 
