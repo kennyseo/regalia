@@ -70,7 +70,7 @@
 	</div>
 </div>
 
-<script src="includes/js/regalia.js"></script>
+<script src="http://uofastore.com/regalia/includes/js/regalia.js"></script>
 
 
 </body>

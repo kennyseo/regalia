@@ -1,7 +1,7 @@
 <?php
-	/*
-	$link = mysql_connect('localhost', 'bookstor', 'abc12345');
-	if (!$link) die('Could not connect: ' . mysql_error());
-	mysql_select_db("bookstor", $link);
-	*/
+$link = mysqli_connect('localhost', 'root', 'root', 'bookstor');
+if (!$link) {
+    die('Could not connect: ' . mysql_error());
+}
+echo 'Connected successfully';
 ?>
