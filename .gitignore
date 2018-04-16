@@ -3,3 +3,4 @@
 /foo/* //ex all foo directory
 /includes/connection.php
 /Controllers/Graduates.txt
+# comment like this
