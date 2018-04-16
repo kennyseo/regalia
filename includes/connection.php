@@ -1,7 +1,8 @@
 <?php
-$link = mysqli_connect('localhost', 'root', 'root', 'bookstor');
-if (!$link) {
-    die('Could not connect: ' . mysql_error());
-}
-echo 'Connected successfully';
+  $database
+  $username
+  $password
+  $hostname
+  ...
+  function tep_db_connect($server = DB_SERVER, $username = )
 ?>
